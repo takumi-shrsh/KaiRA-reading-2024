@@ -72,8 +72,7 @@ class XORPerceptron(Perceptron):
 
 
 def draw_perceptron_classification(perceptron:Type['Perceptron'], title='', title_font_size=18, plot_binary=False):
-    fine_grid_points = np.mgrid[-2:2.1:0.01, -2:2.1:0.01].reshape(2, -1).T
-    # fine_grid_points = np.mgrid[-3:3.1:0.05, -3:3.1:0.05].reshape(2, -1).T
+    fine_grid_points = np.mgrid[-3:3.1:0.05, -3:3.1:0.05].reshape(2, -1).T
     fine_outputs = np.array([perceptron.apply(point) for point in fine_grid_points])
 
     fine_points_0 = fine_grid_points[fine_outputs == 0]

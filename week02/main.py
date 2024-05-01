@@ -15,7 +15,7 @@ def draw_star():
             return 1, 0, -x1
         m = (y2 - y1) / float(x2 - x1)
         intercept = -float(y1 - m * x1)
-        return -m / intercept, 1 / intercept, 1
+        return [-m / intercept, 1 / intercept], 1
 
     five = lambda i: get_straight_line_parameter(
         2 * np.sin(2 * np.pi * i / 5),
@@ -24,19 +24,21 @@ def draw_star():
         2 * np.cos(2 * np.pi * (i + 2) / 5),
     )
 
-    p_list = [SimplePerceptron(five(i)[:2], 1)  for i in range(0, 5)]
+    p_list = [SimplePerceptron(*five(i))  for i in range(0, 5)]
     perceptron = TwoLayersPerceptron([XORPerceptron(p_list)], NOT)
     draw_perceptron_classification(perceptron, 'Five straight lines and XOR gate')
 
 
 def draw_parabola():
     def get_parameters_of_tangent_to_parabola(x):
+        if x == 0:
+            return [0, 1], 2
         m = 2.0 * x
         y = x ** 2 - 2
         b = y - m * x
-        return m / b, -1 / b, 1
+        return [m / b, -1 / b], 1
 
-    p_list = [SimplePerceptron(get_parameters_of_tangent_to_parabola(0.1 * i)[:2], (1 if i !=0 else 2))  for i in range(-20, 21)]
+    p_list = [SimplePerceptron(*get_parameters_of_tangent_to_parabola(0.1 * i))  for i in range(-20, 21)]
     perceptron = ANDPerceptron(p_list)
     draw_perceptron_classification(perceptron, 'Tangent lines of parabola and AND gate')
 
